@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-// import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
+import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
 import "./globals.css";
 
 // Components
@@ -30,9 +30,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <Header />
-        {children}
-        <Footer />
+        <TanStackProvider>
+          <Header />
+          {children}
+          <Footer />
+        </TanStackProvider>
       </body>
     </html>
   );
