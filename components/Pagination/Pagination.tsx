@@ -1,3 +1,4 @@
+"use client";
 import css from "./Pagination.module.css";
 //: Liblaries
 import ReactPaginate from "react-paginate";

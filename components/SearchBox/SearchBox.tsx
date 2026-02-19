@@ -1,3 +1,4 @@
+"use client";
 import css from "./SearchBox.module.css";
 
 // GET https://notehub-public.goit.study/api/notes?search=mysearchtext
