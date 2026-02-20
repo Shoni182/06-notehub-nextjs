@@ -1,5 +1,6 @@
+//?   SSR server side rendering - default mode
+//
 //: Libraries
-
 import {
   QueryClient,
   HydrationBoundary,
@@ -10,23 +11,18 @@ import {
 import NoteListPage from "@/components/NoteList/NoteList";
 import { fetchNotes } from "@/lib/api";
 
-// Type
-
-type Props = {
-  params: Promise<{ currentPage: number; perPage: number; searchText: string }>;
-};
-
-const NotesPage = async ({ params }: Props) => {
-  const { currentPage, perPage, searchText } = await params;
+// : Server prefetch
+const NotesPage = async () => {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: ["notes", currentPage, perPage, searchText],
-    queryFn: () => fetchNotes(currentPage, perPage, searchText),
+    // На серверній частині ключі записуються обєктами задля вдомності,
+    // так як вони повинні співпадати з Кількістю ключів в клієнському компоненті
+    queryKey: ["notes", { page: 0, limit: 0, search: "" }],
+    queryFn: () => fetchNotes(0, 0, ""),
   });
 
-  console.log(typeof currentPage);
-
+  // : Return and dehydratation a
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <NoteListPage />
@@ -35,3 +31,5 @@ const NotesPage = async ({ params }: Props) => {
 };
 
 export default NotesPage;
+
+// notes={data.notes}

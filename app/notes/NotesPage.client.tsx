@@ -1,31 +1,30 @@
+//?  USE CLIETN derective for - CSR Client side rendering
+//
 "use client";
+import { fetchNotes } from "@/lib/api";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-
 import { useDebouncedCallback } from "use-debounce";
 import { toast, Toaster } from "react-hot-toast";
 import css from "@/app/notes/NotesPage.module.css";
 
 //: Components
-import { useParams } from "next/navigation";
-import { fetchNotes } from "@/lib/api";
-import Pagination from "@/components/Pagination/Pagination";
 import Modal from "@/components/Modal/Modal";
+import Pagination from "@/components/Pagination/Pagination";
 import NoteForm from "@/components/NoteForm/NoteForm";
 import SearchBox from "@/components/SearchBox/SearchBox";
 import NoteList from "@/components/NoteList/NoteList";
 
+//: NoteListPage Fn
 const NoteListPage = () => {
-  // const { notes } = useParams<{ notes: Note[] }>();
+  //: Pages
   const perPage = 12;
+  const [currentPage, setCurrentPage] = useState(1);
 
   //: Modal
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
-
-  //: Pages
-  const [currentPage, setCurrentPage] = useState(1);
 
   //: Search and Debounce
   const [searchText, setSearchText] = useState("");
@@ -36,15 +35,20 @@ const NoteListPage = () => {
     debaucedSetSearchText(value);
   };
 
-  //
+  //: Use Query
   const { data, isLoading, isError, isSuccess } = useQuery({
-    queryKey: ["notes", currentPage, perPage, searchText],
+    queryKey: [
+      "notes",
+      { page: currentPage, limit: perPage, search: searchText },
+    ],
     queryFn: () => fetchNotes(currentPage, perPage, searchText),
     placeholderData: keepPreviousData,
+    refetchOnMount: false,
   });
 
   const totalPages = data?.totalPages || 0;
 
+  //: Return
   return (
     <div className={css.app}>
       <header className={css.toolbar}>
@@ -75,5 +79,7 @@ const NoteListPage = () => {
     </div>
   );
 };
+
+//: Export of the Fn
 
 export default NoteListPage;
