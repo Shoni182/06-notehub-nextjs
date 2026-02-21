@@ -5,7 +5,7 @@ import axios from "axios";
 import { type Note } from "./note";
 import { type NewNote } from "./note";
 
-interface FetchNotesResponse {
+export interface FetchNotesResponse {
   notes: Note[];
   totalPages: number;
 }

@@ -6,7 +6,7 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import { toast, Toaster } from "react-hot-toast";
-import css from "@/app/notes/NotesPage.module.css";
+import css from "@/app/notes/Notes.module.css";
 
 //: Components
 import Modal from "@/components/Modal/Modal";
@@ -14,19 +14,20 @@ import Pagination from "@/components/Pagination/Pagination";
 import NoteForm from "@/components/NoteForm/NoteForm";
 import SearchBox from "@/components/SearchBox/SearchBox";
 import NoteList from "@/components/NoteList/NoteList";
+import { FetchNotesResponse } from "@/lib/api";
 
-//: NoteListPage Fn
+//:  Fn
 const NoteListPage = () => {
-  //: Pages
+  // Pages
   const perPage = 12;
   const [currentPage, setCurrentPage] = useState(1);
 
-  //: Modal
+  // Modal
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  //: Search and Debounce
+  // Search and Debounce
   const [searchText, setSearchText] = useState("");
   const debaucedSetSearchText = useDebouncedCallback(setSearchText, 300);
 
@@ -42,7 +43,7 @@ const NoteListPage = () => {
       { page: currentPage, limit: perPage, search: searchText },
     ],
     queryFn: () => fetchNotes(currentPage, perPage, searchText),
-    placeholderData: keepPreviousData,
+    // placeholderData: keepPreviousData,
     refetchOnMount: false,
   });
 

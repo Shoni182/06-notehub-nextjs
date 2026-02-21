@@ -18,11 +18,11 @@ const NotesPage = async () => {
   await queryClient.prefetchQuery({
     // На серверній частині ключі записуються обєктами задля вдомності,
     // так як вони повинні співпадати з Кількістю ключів в клієнському компоненті
-    queryKey: ["notes", { page: 0, limit: 0, search: "" }],
-    queryFn: () => fetchNotes(0, 0, ""),
+    queryKey: ["notes", { page: 1, limit: 12, search: "" }],
+    queryFn: () => fetchNotes(5, 12, ""),
   });
 
-  // : Return and dehydratation a
+  // : Return and dehydratation
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <NoteListPage />

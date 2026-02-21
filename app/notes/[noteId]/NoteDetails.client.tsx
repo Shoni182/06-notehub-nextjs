@@ -1,25 +1,30 @@
 "use client";
+//: Components
 import css from "@/app/notes/[noteId]/NoteDetails.module.css";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { fetchNoteById } from "@/lib/api";
+// import NoteList from "@/components/NoteList/NoteList";
 
+//: Fn
 const NoteDetails = () => {
-  const { id } = useParams<{ id: string }>();
+  const { noteId } = useParams();
 
+  //: Use Query
   const {
     data: note,
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["note", id],
-    queryFn: () => fetchNoteById(id),
+    queryKey: ["note", { id: noteId }],
+    queryFn: () => fetchNoteById(noteId as string),
     refetchOnMount: false,
   });
 
   if (isLoading) return <p>Loading...</p>;
   if (error || !note) return <p>Some error..</p>;
 
+  //: Return
   return (
     <div className={css.container}>
       <div className={css.item}>
