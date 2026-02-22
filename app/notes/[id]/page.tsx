@@ -11,21 +11,21 @@ import { fetchNoteById } from "@/lib/api";
 
 // Типізація
 type Props = {
-  params: Promise<{ noteId: string }>;
+  params: Promise<{ id: string }>;
 };
 
 // Функція
 // : Server prefetch
 const NotePage = async ({ params }: Props) => {
   // Деструктуризація з await тому що це promise
-  const { noteId } = await params;
+  const { id } = await params;
 
   // prefertch query
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: ["note", { id: noteId }],
-    queryFn: () => fetchNoteById(noteId),
+    queryKey: ["note", id],
+    queryFn: () => fetchNoteById(id),
   });
 
   // : Return and dehydratation
