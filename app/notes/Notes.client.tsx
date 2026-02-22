@@ -5,7 +5,7 @@ import { fetchNotes } from "@/lib/api";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
-import { toast, Toaster } from "react-hot-toast";
+// import { toast, Toaster } from "react-hot-toast";
 import css from "@/app/notes/Notes.module.css";
 
 //: Components
@@ -13,22 +13,28 @@ import Modal from "@/components/Modal/Modal";
 import Pagination from "@/components/Pagination/Pagination";
 import NoteForm from "@/components/NoteForm/NoteForm";
 import SearchBox from "@/components/SearchBox/SearchBox";
-import NoteList from "@/components/NoteList/NoteList";
+import NoteLists from "@/components/NoteList/NoteList";
 import { FetchNotesResponse } from "@/lib/api";
 
-//:  Fn
-const NoteListPage = () => {
-  // Pages
-  const perPage = 12;
-  const [currentPage, setCurrentPage] = useState(1);
+interface InitialValuesProps {
+  initialValues: { page: number; limit: number; search: string };
+}
 
-  // Modal
+//:  Fn
+const NoteListPage = ({ initialValues }: InitialValuesProps) => {
+  //: Initial Values
+  const { page, limit, search } = initialValues;
+  //: Pages
+  const perPage = limit;
+  const [currentPage, setCurrentPage] = useState(page);
+
+  //: Modal
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  // Search and Debounce
-  const [searchText, setSearchText] = useState("");
+  //: Search and Debounce
+  const [searchText, setSearchText] = useState(search);
   const debaucedSetSearchText = useDebouncedCallback(setSearchText, 300);
 
   const handleSearch = (value: string) => {
@@ -37,13 +43,10 @@ const NoteListPage = () => {
   };
 
   //: Use Query
-  const { data, isLoading, isError, isSuccess } = useQuery({
-    queryKey: [
-      "notes",
-      { page: currentPage, limit: perPage, search: searchText },
-    ],
+  const { data, isSuccess } = useQuery({
+    queryKey: ["notes", currentPage, perPage, searchText],
     queryFn: () => fetchNotes(currentPage, perPage, searchText),
-    // placeholderData: keepPreviousData,
+    placeholderData: keepPreviousData,
     refetchOnMount: false,
   });
 
@@ -73,10 +76,10 @@ const NoteListPage = () => {
           </Modal>
         )}
       </header>
-      {isLoading && <strong>Завантаження</strong>}
-      {isError && toast.error("Щось пішло не так!")}
+      {/* {isLoading && <strong>Завантаження</strong>} */}
+      {/* {isError && toast.error("Щось пішло не так!")} */}
       {/* <Toaster /> */}
-      {data?.notes && <NoteList notes={data.notes} />}
+      {data?.notes && <NoteLists notes={data.notes} />}
     </div>
   );
 };

@@ -1,7 +1,5 @@
 "use client";
 
-import { toast, Toaster } from "react-hot-toast";
-
 type Props = {
   error: Error;
   reset: () => void;
@@ -10,11 +8,9 @@ type Props = {
 const Error = ({ error, reset }: Props) => {
   return (
     <div>
-      <h2>Помилка при завантаженні</h2>
+      <h2>Помилка при завантаженні деталей нотатки</h2>
       <p>{error.message}</p>
-      {toast.error("Щось пішло не так!")}
       <button onClick={reset}>Спробувати знову</button>
-      <Toaster />
     </div>
   );
 };

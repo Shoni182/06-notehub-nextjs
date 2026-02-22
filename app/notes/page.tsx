@@ -8,28 +8,29 @@ import {
 } from "@tanstack/react-query";
 
 //: Component
-import NoteListPage from "@/components/NoteList/NoteList";
+
+import NoteListPage from "@/app/notes/Notes.client";
 import { fetchNotes } from "@/lib/api";
 
 // : Server prefetch
 const NotesPage = async () => {
   const queryClient = new QueryClient();
 
+  const params = { page: 1, limit: 12, search: "" };
+
   await queryClient.prefetchQuery({
     // На серверній частині ключі записуються обєктами задля вдомності,
     // так як вони повинні співпадати з Кількістю ключів в клієнському компоненті
-    queryKey: ["notes", { page: 1, limit: 12, search: "" }],
+    queryKey: ["notes", params],
     queryFn: () => fetchNotes(5, 12, ""),
   });
 
   // : Return and dehydratation
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <NoteListPage />
+      <NoteListPage initialValues={params} />
     </HydrationBoundary>
   );
 };
 
 export default NotesPage;
-
-// notes={data.notes}

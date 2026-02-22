@@ -1,5 +1,7 @@
+import css from "@/app/page.module.css";
+
 const Loading = () => {
-  return <p>Завантаження нотатків...</p>;
+  return <h2 className={css.loading}>Завантаження списку нотатків...</h2>;
 };
 
 export default Loading;
