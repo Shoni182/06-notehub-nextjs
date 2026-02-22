@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { toast, Toaster } from "react-hot-toast";
 
 type Props = {
@@ -8,11 +9,14 @@ type Props = {
 };
 
 const Error = ({ error, reset }: Props) => {
+  useEffect(() => {
+    toast.error("Щось пішло не так!");
+  }, [error]);
   return (
     <div>
       <h2>Помилка при завантаженні</h2>
       <p>Could not fetch the list of notes. {error.message}</p>
-      {toast.error("Щось пішло не так!")}
+
       <button onClick={reset}>Спробувати знову</button>
       <Toaster />
     </div>
