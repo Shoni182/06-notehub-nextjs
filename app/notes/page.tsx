@@ -16,13 +16,13 @@ import { fetchNotes } from "@/lib/api";
 const NotesPage = async () => {
   const queryClient = new QueryClient();
 
-  const params = { page: 1, limit: 12, search: "" };
+  const params = { page: 1, perPage: 12, searchInput: "" };
 
   await queryClient.prefetchQuery({
     // На серверній частині ключі записуються обєктами задля вдомності,
     // так як вони повинні співпадати з Кількістю ключів в клієнському компоненті
     queryKey: ["notes", params],
-    queryFn: () => fetchNotes(5, 12, ""),
+    queryFn: () => fetchNotes(params),
   });
 
   // : Return and dehydratation

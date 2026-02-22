@@ -17,15 +17,15 @@ import NoteLists from "@/components/NoteList/NoteList";
 // import { FetchNotesResponse } from "@/lib/api";
 
 interface InitialValuesProps {
-  initialValues: { page: number; limit: number; search: string };
+  initialValues: { page: number; perPage: number; searchInput: string };
 }
 
 //:  Fn
 const NoteListPage = ({ initialValues }: InitialValuesProps) => {
   //: Initial Values
-  const { page, limit, search } = initialValues;
+  const { page, perPage, searchInput } = initialValues;
   //: Pages
-  const perPage = limit;
+
   const [currentPage, setCurrentPage] = useState(page);
 
   //: Modal
@@ -34,7 +34,7 @@ const NoteListPage = ({ initialValues }: InitialValuesProps) => {
   const closeModal = () => setIsModalOpen(false);
 
   //: Search and Debounce
-  const [searchText, setSearchText] = useState(search);
+  const [searchText, setSearchText] = useState(searchInput);
   const debaucedSetSearchText = useDebouncedCallback(setSearchText, 300);
 
   const handleSearch = (value: string) => {

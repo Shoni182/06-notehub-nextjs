@@ -14,16 +14,20 @@ export interface FetchNotesResponse {
 const myKey = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
 axios.defaults.baseURL = "https://notehub-public.goit.study/api";
 
-export const fetchNotes = async (
-  page: number,
-  perPage: number,
-  searchText: string,
-) => {
+export const fetchNotes = async ({
+  page,
+  perPage,
+  searchInput,
+}: {
+  page: number;
+  perPage: number;
+  searchInput: string;
+}) => {
   const res = await axios.get<FetchNotesResponse>("/notes", {
     params: {
       page,
       perPage,
-      search: searchText,
+      search: searchInput,
     },
     headers: {
       Authorization: `Bearer ${myKey}`,
