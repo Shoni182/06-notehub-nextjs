@@ -13,7 +13,7 @@ import Modal from "@/components/Modal/Modal";
 import Pagination from "@/components/Pagination/Pagination";
 import NoteForm from "@/components/NoteForm/NoteForm";
 import SearchBox from "@/components/SearchBox/SearchBox";
-import NoteLists from "@/components/NoteList/NoteList";
+import NoteList from "@/components/NoteList/NoteList";
 // import { FetchNotesResponse } from "@/lib/api";
 
 interface InitialValuesProps {
@@ -84,7 +84,7 @@ const NoteListPage = ({ initialValues }: InitialValuesProps) => {
       {/* {isLoading && <strong>Завантаження</strong>} */}
       {/* {isError && toast.error("Щось пішло не так!")} */}
       {/* <Toaster /> */}
-      {data?.notes && <NoteLists notes={data.notes} />}
+      {data?.notes && <NoteList notes={data.notes} />}
     </div>
   );
 };

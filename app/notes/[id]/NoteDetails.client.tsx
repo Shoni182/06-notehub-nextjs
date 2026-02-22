@@ -8,7 +8,7 @@ import { fetchNoteById } from "@/lib/api";
 
 //: Fn
 const NoteDetails = () => {
-  const { noteId } = useParams();
+  const { id } = useParams();
 
   //: Use Query
   const {
@@ -16,8 +16,8 @@ const NoteDetails = () => {
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["note", { id: noteId }],
-    queryFn: () => fetchNoteById(noteId as string),
+    queryKey: ["note", { id: id }],
+    queryFn: () => fetchNoteById(id as string),
     refetchOnMount: false,
   });
 
