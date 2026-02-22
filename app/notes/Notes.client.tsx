@@ -45,7 +45,12 @@ const NoteListPage = ({ initialValues }: InitialValuesProps) => {
   //: Use Query
   const { data, isSuccess } = useQuery({
     queryKey: ["notes", currentPage, perPage, searchText],
-    queryFn: () => fetchNotes(currentPage, perPage, searchText),
+    queryFn: () =>
+      fetchNotes({
+        page: currentPage,
+        perPage: perPage,
+        searchInput: searchText,
+      }),
     placeholderData: keepPreviousData,
     refetchOnMount: false,
   });
