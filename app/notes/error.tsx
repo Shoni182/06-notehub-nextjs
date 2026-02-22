@@ -11,7 +11,7 @@ const Error = ({ error, reset }: Props) => {
   return (
     <div>
       <h2>Помилка при завантаженні</h2>
-      <p>{error.message}</p>
+      <p>Could not fetch the list of notes. {error.message}</p>
       {toast.error("Щось пішло не так!")}
       <button onClick={reset}>Спробувати знову</button>
       <Toaster />
