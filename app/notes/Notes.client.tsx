@@ -14,7 +14,7 @@ import Pagination from "@/components/Pagination/Pagination";
 import NoteForm from "@/components/NoteForm/NoteForm";
 import SearchBox from "@/components/SearchBox/SearchBox";
 import NoteLists from "@/components/NoteList/NoteList";
-import { FetchNotesResponse } from "@/lib/api";
+// import { FetchNotesResponse } from "@/lib/api";
 
 interface InitialValuesProps {
   initialValues: { page: number; limit: number; search: string };
