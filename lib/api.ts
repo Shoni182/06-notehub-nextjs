@@ -2,8 +2,8 @@
 import axios from "axios";
 
 // interface
-import { type Note } from "./note";
-import { type NewNote } from "./note";
+import { type Note } from "../types/note";
+import { type NewNote } from "../types/note";
 
 export interface FetchNotesResponse {
   notes: Note[];
